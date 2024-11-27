@@ -20,12 +20,7 @@ contract AttendanceTrackerTest is Test {
         vm.prank(owner);
         tracker.registerEmployee(1, "Alice", employee1);
 
-        (
-            uint256 id,
-            string memory name,
-            address walletAddress,
-            bool isRegistered
-        ) = tracker.employees(employee1);
+        (uint256 id, string memory name, address walletAddress, bool isRegistered) = tracker.employees(employee1);
 
         assertEq(id, 1);
         assertEq(name, "Alice");
@@ -44,8 +39,7 @@ contract AttendanceTrackerTest is Test {
         vm.prank(employee1);
         tracker.markAttendance(block.timestamp, true);
         vm.prank(owner);
-        AttendanceTracker.Attendance[] memory records = tracker
-            .getAttendanceRecords(employee1);
+        AttendanceTracker.Attendance[] memory records = tracker.getAttendanceRecords(employee1);
 
         assertEq(records.length, 1);
         assertEq(records[0].date, block.timestamp);
@@ -67,14 +61,12 @@ contract AttendanceTrackerTest is Test {
         tracker.markAttendance(block.timestamp, false);
 
         vm.prank(owner);
-        AttendanceTracker.Attendance[] memory records1 = tracker
-            .getAttendanceRecords(employee1);
+        AttendanceTracker.Attendance[] memory records1 = tracker.getAttendanceRecords(employee1);
         assertEq(records1.length, 1);
         assertEq(records1[0].isPresent, true);
 
         vm.prank(owner);
-        AttendanceTracker.Attendance[] memory records2 = tracker
-            .getAttendanceRecords(employee2);
+        AttendanceTracker.Attendance[] memory records2 = tracker.getAttendanceRecords(employee2);
         assertEq(records2.length, 1);
         assertEq(records2[0].isPresent, false);
 

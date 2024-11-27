@@ -12,13 +12,13 @@ contract AttendanceTracker {
     }
 
     struct Attendance {
-        uint256 date; 
+        uint256 date;
         bool isPresent;
     }
 
-    mapping(address => Employee) public employees; 
-    mapping(address => Attendance[]) public attendanceRecords; 
-    address[] public employeeList; 
+    mapping(address => Employee) public employees;
+    mapping(address => Attendance[]) public attendanceRecords;
+    address[] public employeeList;
 
     event EmployeeRegistered(uint256 id, string name, address walletAddress);
     event AttendanceMarked(address employee, uint256 date, bool isPresent);
@@ -32,6 +32,7 @@ contract AttendanceTracker {
         require(employees[msg.sender].isRegistered, "You are not a registered employee");
         _;
     }
+
     constructor() {
         owner = msg.sender;
     }
@@ -43,7 +44,6 @@ contract AttendanceTracker {
         emit EmployeeRegistered(id, name, walletAddress);
     }
 
-  
     function markAttendance(uint256 date, bool isPresent) public onlyRegistered {
         attendanceRecords[msg.sender].push(Attendance(date, isPresent));
         emit AttendanceMarked(msg.sender, date, isPresent);
@@ -58,4 +58,3 @@ contract AttendanceTracker {
         return employeeList.length;
     }
 }
-

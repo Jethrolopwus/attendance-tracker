@@ -7,29 +7,27 @@ import "../src/AttendanceTracker.sol";
 contract AttendanceTrackerScript is Script {
     AttendanceTracker public tracker;
 
-    address owner = vm.addr(1); 
+    address owner = vm.addr(1);
     address employee1 = vm.addr(2);
-    address employee2 = vm.addr(3); 
+    address employee2 = vm.addr(3);
 
     function setUp() public {
-       
-        vm.startBroadcast(owner); 
+        vm.startBroadcast(owner);
     }
 
     function run() public {
         tracker = new AttendanceTracker();
         console.log("AttendanceTracker deployed at:", address(tracker));
 
-    
         tracker.registerEmployee(1, "John", employee1);
         tracker.registerEmployee(2, "Alice", employee2);
         console.log("Registered employees John and Alice");
 
-        vm.prank(employee1); 
+        vm.prank(employee1);
         tracker.markAttendance(block.timestamp, true);
         console.log("Attendance marked for Alice");
 
-        vm.prank(employee2); 
+        vm.prank(employee2);
         tracker.markAttendance(block.timestamp, false);
         console.log("Attendance marked for John");
 
